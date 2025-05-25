@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: mrt__customer_positions_daily
+    description: "Customer-level daily positions per instrument, forward-filled and including the model refresh timestamp."
+    config:
+      materialized: table
+    columns:
+      - name: surrogate_key
+        description: "{{ doc('surrogate_key_mart') }}"
+        tests:
+          - not_null
+          - unique
+      - name: customer_account_id
+        description: "{{ doc('customer_account_id_mart') }}"
+        tests: [not_null]
+      - name: customer_id
+        description: "{{ doc('customer_id_mart') }}"
+        tests: [not_null]
+      - name: partner_id
+        description: "{{ doc('partner_id_mart') }}"
+        tests: [not_null]
+      - name: instrument
+        description: "{{ doc('instrument_mart') }}"
+        tests: [not_null]
+      - name: instrument_price
+        description: "{{ doc('instrument_price_mart') }}"
+        tests: [not_null]
+      - name: trade_date
+        description: "{{ doc('trade_date_mart') }}"
+        tests: [not_null]
+      - name: cumulative_position
+        description: "{{ doc('cumulative_position_mart') }}"
+        tests: [not_null]
+      - name: _METADATA_UPDATED_AT
+        description: "Timestamp when the mart model was last refreshed."
+        tests: [not_null]
+
+  - name: mrt__partner_positions_daily
+    description: "Partner-level daily positions per instrument, forward-filled and including the model refresh timestamp."
+    config:
+      materialized: table
+    columns:
+      - name: surrogate_key
+        description: "{{ doc('surrogate_key_mart') }}"
+        tests:
+          - not_null
+          - unique
+      - name: partner_id
+        description: "{{ doc('partner_id_mart') }}"
+        tests: [not_null]
+      - name: instrument
+        description: "{{ doc('instrument_mart') }}"
+        tests: [not_null]
+      - name: instrument_price
+        description: "{{ doc('instrument_price_mart') }}"
+        tests: [not_null]
+      - name: trade_date
+        description: "{{ doc('trade_date_mart') }}"
+        tests: [not_null]
+      - name: cumulative_position
+        description: "{{ doc('cumulative_position_mart') }}"
+        tests: [not_null]
+      - name: _METADATA_UPDATED_AT
+        description: "Timestamp when the mart model was last refreshed."
+        tests: [not_null]

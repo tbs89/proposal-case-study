@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: mart_layer
+    schema: public_mart
+    description: "Source definition for models in the mart layer to apply freshness testing."
+    tables:
+      - name: mrt__customer_positions_daily_filled
+        description: "Customer-level daily positions per instrument, from the mart layer."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: mrt__partner_positions_daily_filled
+        description: "Partner-level daily positions per instrument, from the mart layer."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT

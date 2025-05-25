@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: staging_layer
+    schema: public_staging
+    tables:
+      - name: stg__customer_accounts
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: stg__price_snapshots
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: stg__trades
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT

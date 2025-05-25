@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: transform_layer
+    schema: public_transform
+    description: "Intermediate transform layer models, mainly applying business rules and forward-filling."
+    tables:
+      - name: trf__dim_time
+        description: "Calendar dimension table providing attributes for each day."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: trf__customer_positions_daily
+        description: "Customer positions captured on trading days without forward-filling."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: trf__customer_positions_daily_filled
+        description: "Customer positions forward-filled to ensure continuity across non-trading days."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT
+
+      - name: trf__partner_positions_daily_filled
+        description: "Partner-level aggregated positions per instrument, forward-filled daily."
+        freshness:
+          warn_after: { count: 12, period: hour }
+          error_after: { count: 1, period: day }
+        loaded_at_field: _METADATA_UPDATED_AT

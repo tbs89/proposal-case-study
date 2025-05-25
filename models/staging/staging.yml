@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: stg__trades
+    description: "Parses and casts raw trade data, including quantity, price, and amount."
+    columns:
+      - name: trade_id
+        description: "{{ doc('trade_id') }}"
+        tests: [not_null, unique]
+
+      - name: customer_account_id
+        description: "{{ doc('customer_account_id_staging') }}"
+        tests: [not_null]
+
+      - name: instrument
+        description: "{{ doc('instrument_staging') }}"
+        tests: [not_null]
+
+      - name: side
+        description: "{{ doc('side') }}"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['buy', 'sell']
+
+      - name: quantity
+        description: "{{ doc('quantity') }}"
+
+      - name: price
+        description: "{{ doc('price') }}"
+
+      - name: amount
+        description: "{{ doc('amount') }}"
+
+      - name: trade_date
+        description: "{{ doc('trade_date_staging') }}"
+
+      - name: _METADATA_UPDATED_AT
+        description: "Timestamp when the staging model was last refreshed."
+        tests: [not_null]
+
+  - name: stg__price_snapshots
+    description: "Cleans and types price snapshot data for each instrument and date."
+    columns:
+      - name: surrogate_key
+        description: "{{ doc('surrogate_key_staging') }}"
+        tests: [not_null, unique]
+
+      - name: instrument
+        description: "{{ doc('instrument_staging') }}"
+        tests: [not_null]
+
+      - name: price
+        description: "{{ doc('price') }}"
+
+      - name: snapshot_date
+        description: "{{ doc('snapshot_date') }}"
+
+      - name: _METADATA_UPDATED_AT
+        description: "Timestamp when the staging model was last refreshed."
+        tests: [not_null]
+
+  - name: stg__customer_accounts
+    description: "Casts the customer account data and prepares it for joining."
+    columns:
+      - name: customer_account_id
+        description: "{{ doc('customer_account_id_staging') }}"
+        tests: [not_null, unique]
+
+      - name: customer_id
+        description: "{{ doc('customer_id_staging') }}"
+        tests: [not_null]
+
+      - name: partner_id
+        description: "{{ doc('partner_id_staging') }}"
+        tests: [not_null]
+
+      - name: _METADATA_UPDATED_AT
+        description: "Timestamp when the staging model was last refreshed."
+        tests: [not_null]
+
+  - name: stg__dim_time
+    description: "Casts date and day of week data."
+    columns:
+      - name: date  
+        tests: [not_null, unique]
+
+      - name: day_of_week
+        tests: [not_null]

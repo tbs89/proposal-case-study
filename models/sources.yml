@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: source
+    database: postgres
+    schema: public_source
+    tables:
+      - name: trades
+      - name: customer_accounts
+      - name: price_snapshots
